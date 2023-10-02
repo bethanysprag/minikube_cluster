@@ -15,8 +15,9 @@ RUN --mount=type=cache,target=/root/.cache \
 
 FROM base as minikube
 WORKDIR /work
-COPY scripts/install_docker.sh install_docker.sh
+COPY scripts/ .
 RUN ./install_docker.sh
+RUN ./install_kompose
 RUN wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
     install minikube-linux-amd64 /usr/local/bin/minikube
 #RUN apt update && \
