@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.test.yml -c
+    kompose.version: 1.31.0 (a04ecdb9e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: hello
+  name: hello
+  namespace: default
+spec:
+  ports:
+    - name: "5000"
+      port: 5000
+      targetPort: 5000
+      protocol: TCP
+  selector:
+    io.kompose.service: hello
+  type: NodePort

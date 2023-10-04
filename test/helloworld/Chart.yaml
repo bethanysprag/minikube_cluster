@@ -1,0 +1,8 @@
+name: helloworld
+description: A generated Helm Chart originally generated for docker-compose.test from Skippbox Kompose with the addition of an exposed external port
+version: 0.0.2
+apiVersion: v2
+keywords:
+  - docker-compose.test
+sources:
+home:

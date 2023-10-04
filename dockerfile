@@ -20,8 +20,8 @@ RUN ./install_docker.sh
 RUN ./install_kompose.sh
 RUN wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
     install minikube-linux-amd64 /usr/local/bin/minikube
-#RUN apt update && \
-#    apt install kubectl -y
+RUN ./install_helm.sh
+COPY test/ /work/test
     
 USER root
 CMD minikube start --force
