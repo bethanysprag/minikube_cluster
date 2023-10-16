@@ -11,6 +11,7 @@ help:
 	@echo "pods -- get list of pods"
 	@echo "dashboard -- get dashboard link"
 	@echo "verify -- verify proper functioning of minikube by deploying a test service then removing it"
+	@echo "disposable -- Run a ubuntu pod interactive shell in the default cluster that will be removed as soon as you exit"
 
 start:
 # Start minikube
@@ -40,7 +41,11 @@ pods:
 
 dashboard:
 # Get minikube dashboard link
-	docker exec -d $(CONTAINER_NAME) /bin/sh -c "minikube dashboard"
+	docker exec -d $(CONTAINER_NAME) /bin/sh -c "minikube dashboard --port 40000 --url=True"
+	@echo "http://127.0.0.1:40000/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/"
+
+disposable:
+	docker exec -it $(CONTAINER_NAME) /bin/sh -c "minikube kubectl -- run my-shell --rm -i --tty --image ubuntu:23.10 -- bash"
 
 verify:
 # Package and deploy a test service using helm and verifying external ip access
