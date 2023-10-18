@@ -49,6 +49,6 @@ disposable:
 
 verify:
 # Package and deploy a test service using helm and verifying external ip access
-	@docker exec -w /work/test $(CONTAINER_NAME) /bin/sh -c " \
+	@docker exec -w /home/kubeuser/test $(CONTAINER_NAME) /bin/sh -c " \
 	./test_script.sh \
 	"

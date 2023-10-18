@@ -21,7 +21,15 @@ RUN ./install_kompose.sh
 RUN wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
     install minikube-linux-amd64 /usr/local/bin/minikube
 RUN ./install_helm.sh
-COPY test/ /work/test
-    
+
+ARG DOCKER_GID=$DOCKER_GID
+RUN groupadd -r kubeuser && useradd -l -r -m -g kubeuser -u 1000 kubeuser && \
+    usermod -aG docker kubeuser && \
+    groupmod -g $DOCKER_GID docker
+
 USER root
-CMD minikube start --force
+WORKDIR /home/kubeuser
+COPY test/ test
+RUN chown -R kubeuser test
+USER kubeuser
+CMD minikube start

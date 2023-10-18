@@ -7,6 +7,8 @@ services:
     build:
         context: .
         target: minikube
+        args:
+        - DOCKER_GID=$DOCKER_GID
     restart: unless-stopped
     network_mode: host
     hostname: minikube
