@@ -15,8 +15,8 @@ help:
 
 start:
 # Start minikube
-	docker compose -f docker-compose.minimal.yml build
-	docker compose -f docker-compose.minimal.yml up -d
+	docker compose -f docker-compose.yml build
+	docker compose -f docker-compose.yml up -d
 	docker exec $(CONTAINER_NAME) /bin/sh -c 'minikube delete'
 	docker exec $(CONTAINER_NAME) /bin/sh -c "minikube start --force"
 
@@ -31,7 +31,7 @@ stop:
 
 clean:
 # Completely clean container and image off your machine
-	docker compose -f docker-compose.minimal.yml down
+	docker compose -f docker-compose.yml down
 	docker rm -f $(CONTAINER_NAME)
 	docker rmi -f minikube:latest
 

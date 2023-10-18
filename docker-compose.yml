@@ -1,58 +1,18 @@
 version: '3'
+
 services:
-  docker:
-    image: docker:20.10.17
-    hostname: docker
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    container_name: docker
-    networks:
-      - dind
-  
-  minikube_host:
-    image: minicube:host
+  minikube:
+    image: minikube:latest
+    container_name: $CONTAINER_NAME
     build:
-      context: .
-      target: minikube
-    hostname: minikube_host
+        context: .
+        target: minikube
     restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    container_name: minikube_host
-    networks:
-      - dind
-    ports:
-      - 8051:80
-      - 8052:443
-      - 8053:8080
+    network_mode: host
+    hostname: minikube
     env_file:
       - .env
-    command: minikube start --force --network=dind -v 10
-
-  minikube_client:
-    image: minikube:client
-    build:
-      context: .
-      target: minikube
-    hostname: minikube_client
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    container_name: minikube_client
-    networks:
-      - dind
-    ports:
-      - 8051:80
-      - 8052:443
-      - 8053:8080
-    env_file:
-      - .env
-    command: /bin/bash
-
-networks:
-  dind:
-    name: dind
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.18.0.0/24
+    - /var/run/docker.sock:/var/run/docker.sock
+    - $PWD/data:/data
+    command: tail -F /dev/null
